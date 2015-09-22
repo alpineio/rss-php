@@ -202,6 +202,8 @@ class Feed
 	 */
 	private static function httpRequest($url, $user, $pass)
 	{
+		$userAgent = 'Mozilla/5.0 (Windows NT 5.1; rv:31.0) Gecko/20100101 Firefox/31.0';
+		
 		if (extension_loaded('curl')) {
 			$curl = curl_init();
 			curl_setopt($curl, CURLOPT_URL, $url);
@@ -211,6 +213,11 @@ class Feed
 			curl_setopt($curl, CURLOPT_HEADER, FALSE);
 			curl_setopt($curl, CURLOPT_TIMEOUT, 20);
 			curl_setopt($curl, CURLOPT_ENCODING , '');
+			curl_setopt($ch, CURLOPT_USERAGENT, $userAgent );			
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);     
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+			curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
+			
 			curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE); // no echo, just return result
 			if (!ini_get('open_basedir')) {
 				curl_setopt($curl, CURLOPT_FOLLOWLOCATION, TRUE); // sometime is useful :)
