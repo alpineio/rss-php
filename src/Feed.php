@@ -188,6 +188,9 @@ class Feed
 			throw new FeedException('Cannot load feed.');
 		}
 
+		$data = str_replace( '<media:', '<', $data );
+		$data = str_replace( '</media:', '</', $data );
+
 		return new SimpleXMLElement($data, LIBXML_NOWARNING | LIBXML_NOERROR);
 	}
 
